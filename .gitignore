@@ -1,0 +1,13 @@
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Configuración local de VS Code
+.vscode/
+
+# Logs y temporales
+*.log
+*.tmp
+
+# Dependencias
+node_modules/

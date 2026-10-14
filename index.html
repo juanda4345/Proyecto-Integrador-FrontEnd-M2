@@ -3,25 +3,196 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login - Sistema ESD</title>
+  <title>ESD - Gestión de notas</title>
   <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
-  <div class="login-container">
-    <img src="img/logo-esd.png" alt="Logo ESD" class="logo">
-    <h2>Inicio de Sesión</h2>
-    <form id="loginForm">
-      <label for="usuario">Usuario:</label>
-      <input type="text" id="usuario" required>
+  <!-- Pantalla de acceso -->
+  <section id="pantallaLogin" class="pantalla-login">
+    <div class="tarjeta-login">
+      <img src="img/logo-esd.png" alt="Logo ESD" class="logo">
+      <h1>Iniciar sesión</h1>
+      <p>Ingresa para consultar las notas.</p>
 
-      <label for="password">Contraseña:</label>
-      <input type="password" id="password" required>
+      <form id="formularioLogin">
+        <label for="usuario">Usuario</label>
+        <input id="usuario" type="text" required>
 
-      <button type="submit">Ingresar</button>
-    </form>
-    <p id="mensaje"></p>
+        <label for="contrasena">Contraseña</label>
+        <input id="contrasena" type="password" required>
+
+        <p id="mensajeLogin" class="mensaje"></p>
+        <button type="submit" class="boton boton-azul">Ingresar</button>
+      </form>
+
+      <p class="ayuda">Usuario de prueba: admin<br>Contraseña: 1234</p>
+    </div>
+  </section>
+
+  <!-- Aplicación que se muestra después del login -->
+  <div id="aplicacion" class="oculto">
+    <header class="encabezado">
+      <a class="marca" href="#" data-pagina="inicio">
+        <img src="img/logo-esd.png" alt="">
+        <span>ESD</span>
+      </a>
+
+      <nav>
+        <button class="boton-menu activo" data-pagina="inicio">Inicio</button>
+        <button class="boton-menu" data-pagina="notas">Notas</button>
+        <button class="boton-menu" data-pagina="contacto">Contáctanos</button>
+      </nav>
+
+      <div class="usuario-actual">
+        <span id="nombreUsuario">Admin</span>
+        <button id="botonCerrarSesion" class="boton boton-claro">Salir</button>
+      </div>
+    </header>
+
+    <main>
+      <!-- Inicio -->
+      <section id="paginaInicio" class="pagina">
+        <div class="bienvenida">
+          <p>ESPACIO DE ESTUDIO DIGITAL</p>
+          <h1>¡Bienvenido, <span id="saludoUsuario">Admin</span>!</h1>
+          <p>Consulta y administra las notas de tus estudiantes.</p>
+          <button class="boton boton-blanco" data-pagina="notas">Ver notas</button>
+        </div>
+
+        <h2>Resumen de notas</h2>
+        <div class="resumen">
+          <article class="tarjeta">
+            <p>Estudiantes registrados</p>
+            <strong id="totalEstudiantes">0</strong>
+          </article>
+          <article class="tarjeta">
+            <p>Promedio general</p>
+            <strong id="promedioGeneral">0</strong>
+          </article>
+          <article class="tarjeta">
+            <p>Estudiantes aprobados</p>
+            <strong id="totalAprobados">0</strong>
+          </article>
+        </div>
+
+        <article class="tarjeta">
+          <div class="titulo-seccion">
+            <div>
+              <h2>Notas recientes</h2>
+              <p>Últimos registros agregados</p>
+            </div>
+            <button class="boton-enlace" data-pagina="notas">Ver todas</button>
+          </div>
+          <div class="tabla-contenedor">
+            <table>
+              <thead>
+                <tr>
+                  <th>Estudiante</th>
+                  <th>Materia</th>
+                  <th>Promedio</th>
+                  <th>Estado</th>
+                </tr>
+              </thead>
+              <tbody id="tablaRecientes"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <!-- Gestión de notas: formulario y tabla para las operaciones CRUD -->
+      <section id="paginaNotas" class="pagina oculto">
+        <div class="titulo-pagina">
+          <div>
+            <h1>Notas de estudiantes</h1>
+            <p>Agrega, consulta, modifica o elimina un registro.</p>
+          </div>
+        </div>
+
+        <article class="tarjeta">
+          <h2 id="tituloFormulario">Registrar nota</h2>
+          <form id="formularioNota">
+            <input id="idNota" type="hidden">
+
+            <div class="campos">
+              <div>
+                <label for="estudiante">Nombre del estudiante</label>
+                <input id="estudiante" type="text" required>
+              </div>
+              <div>
+                <label for="materia">Materia</label>
+                <input id="materia" type="text" required>
+              </div>
+              <div>
+                <label for="nota1">Nota 1</label>
+                <input id="nota1" type="number" min="1" max="5" step="0.1" required>
+              </div>
+              <div>
+                <label for="nota2">Nota 2</label>
+                <input id="nota2" type="number" min="1" max="5" step="0.1" required>
+              </div>
+              <div>
+                <label for="nota3">Nota 3</label>
+                <input id="nota3" type="number" min="1" max="5" step="0.1" required>
+              </div>
+            </div>
+
+            <p id="mensajeNota" class="mensaje"></p>
+            <button id="botonGuardar" type="submit" class="boton boton-azul">Guardar nota</button>
+            <button id="botonCancelar" type="button" class="boton boton-claro oculto">Cancelar edición</button>
+          </form>
+        </article>
+
+        <article class="tarjeta">
+          <div class="titulo-seccion">
+            <div>
+              <h2>Registros guardados</h2>
+              <p id="cantidadResultados">0 estudiantes</p>
+            </div>
+            <label class="buscador">
+              Buscar
+              <input id="busqueda" type="search" placeholder="Nombre o materia">
+            </label>
+          </div>
+
+          <div class="tabla-contenedor">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Estudiante</th>
+                  <th>Materia</th>
+                  <th>Nota 1</th>
+                  <th>Nota 2</th>
+                  <th>Nota 3</th>
+                  <th>Promedio</th>
+                  <th>Estado</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="tablaNotas"></tbody>
+            </table>
+          </div>
+          <p id="sinResultados" class="sin-resultados oculto">No se encontraron registros.</p>
+          <p class="nota-local">Los datos se guardan en este navegador.</p>
+        </article>
+      </section>
+
+      <!-- Información de contacto -->
+      <section id="paginaContacto" class="pagina oculto">
+        <h1>Contáctanos</h1>
+        <p>Si tienes preguntas sobre el sistema, puedes comunicarte con soporte.</p>
+        <article class="tarjeta contacto">
+          <h2>Centro de soporte</h2>
+          <p>Horario: lunes a viernes, de 9:00 a. m. a 6:00 p. m.</p>
+          <p>Correo: soporte@esd.com</p>
+        </article>
+      </section>
+    </main>
+
+    <footer>ESD - Proyecto académico de FrontEnd</footer>
   </div>
-  <script src="js/login.js"></script>
+
+  <script src="js/Dom.js"></script>
 </body>
 </html>
 
