@@ -178,13 +178,13 @@ function editarNota(evento) {
 }
 
 function eliminarNota(evento) {
-  var idBuscado = Number(evento.currentTarget.getAttribute("data-id"));
-  var confirmar = confirm("¿Deseas eliminar este registro?");
+  let idBuscado = Number(evento.currentTarget.getAttribute("data-id"));
+  let confirmar = confirm("¿Deseas eliminar este registro?");
 
   if (confirmar) {
-    var listaActualizada = [];
+    let listaActualizada = [];
 
-    for (var i = 0; i < notas.length; i++) {
+    for (let i = 0; i < notas.length; i++) {
       if (notas[i].id !== idBuscado) {
         listaActualizada.push(notas[i]);
       }
@@ -198,12 +198,12 @@ function eliminarNota(evento) {
 document.getElementById("formularioNota").addEventListener("submit", function (evento) {
   evento.preventDefault();
 
-  var idActual = document.getElementById("idNota").value;
-  var nombreEstudiante = document.getElementById("estudiante").value.trim();
-  var nombreMateria = document.getElementById("materia").value.trim();
-  var nota1 = Number(document.getElementById("nota1").value);
-  var nota2 = Number(document.getElementById("nota2").value);
-  var nota3 = Number(document.getElementById("nota3").value);
+  let idActual = document.getElementById("idNota").value;
+  let nombreEstudiante = document.getElementById("estudiante").value.trim();
+  let nombreMateria = document.getElementById("materia").value.trim();
+  let nota1 = Number(document.getElementById("nota1").value);
+  let nota2 = Number(document.getElementById("nota2").value);
+  let nota3 = Number(document.getElementById("nota3").value);
 
   if (nota1 < 1 || nota1 > 5 ||
       nota2 < 1 || nota2 > 5 ||
@@ -213,7 +213,7 @@ document.getElementById("formularioNota").addEventListener("submit", function (e
     return;
   }
 
-  var notaNueva = {
+  let notaNueva = {
     id: Number(idActual),
     estudiante: nombreEstudiante,
     materia: nombreMateria,
@@ -226,7 +226,7 @@ document.getElementById("formularioNota").addEventListener("submit", function (e
     notaNueva.id = new Date().getTime();
     notas.push(notaNueva);
   } else {
-    for (var i = 0; i < notas.length; i++) {
+    for (let i = 0; i < notas.length; i++) {
       if (notas[i].id === Number(idActual)) {
         notas[i] = notaNueva;
       }
@@ -242,8 +242,8 @@ document.getElementById("botonCancelar").addEventListener("click", limpiarFormul
 document.getElementById("formularioLogin").addEventListener("submit", function (evento) {
   evento.preventDefault();
 
-  var usuario = document.getElementById("usuario").value;
-  var contrasena = document.getElementById("contrasena").value;
+  let usuario = document.getElementById("usuario").value;
+  let contrasena = document.getElementById("contrasena").value;
 
   if (usuario === "admin" && contrasena === "1234") {
     document.getElementById("pantallaLogin").classList.add("oculto");
@@ -267,20 +267,20 @@ document.getElementById("formularioLogin").addEventListener("submit", function (
 });
 
 function cambiarPagina(evento) {
-  var nombrePagina = evento.currentTarget.getAttribute("data-pagina");
-  var paginas = document.getElementsByClassName("pagina");
+  let nombrePagina = evento.currentTarget.getAttribute("data-pagina");
+  let paginas = document.getElementsByClassName("pagina");
 
-  for (var i = 0; i < paginas.length; i++) {
+  for (let i = 0; i < paginas.length; i++) {
     paginas[i].classList.add("oculto");
   }
 
-  var idPagina = "pagina" + nombrePagina.charAt(0).toUpperCase() +
+  let idPagina = "pagina" + nombrePagina.charAt(0).toUpperCase() +
     nombrePagina.slice(1);
   document.getElementById(idPagina).classList.remove("oculto");
 
-  var botonesMenu = document.getElementsByClassName("boton-menu");
+  let botonesMenu = document.getElementsByClassName("boton-menu");
 
-  for (var j = 0; j < botonesMenu.length; j++) {
+  for (let j = 0; j < botonesMenu.length; j++) {
     botonesMenu[j].classList.remove("activo");
   }
 
@@ -289,9 +289,9 @@ function cambiarPagina(evento) {
   }
 }
 
-var enlacesPagina = document.querySelectorAll("[data-pagina]");
+let enlacesPagina = document.querySelectorAll("[data-pagina]");
 
-for (var i = 0; i < enlacesPagina.length; i++) {
+for (let i = 0; i < enlacesPagina.length; i++) {
   enlacesPagina[i].addEventListener("click", cambiarPagina);
 }
 
@@ -305,3 +305,50 @@ document.getElementById("botonCerrarSesion").addEventListener("click", function 
   document.querySelector("#formularioLogin button").disabled = false;
   intentos = 0;
 });
+
+
+
+let usuariosRegistrados = [];
+
+document.getElementById("formularioRegistro").addEventListener("submit", function (evento) {
+  evento.preventDefault();
+
+
+  let nuevoUsuario = document.getElementById("nuevoUsuario").value.trim();
+  let nuevaContrasena = document.getElementById("nuevaContrasena").value;
+  let documento = document.getElementById("documento").value.trim();
+  let fechaNacimiento = document.getElementById("fechaNacimiento").value;
+  let telefono = document.getElementById("telefono").value.trim();
+  let genero = document.getElementById("genero").value.trim();
+  let direccion = document.getElementById("direccion").value.trim();
+  let mensajeRegistro = document.getElementById("mensajeRegistro");
+
+
+  for (let i = 0; i < usuariosRegistrados.length; i++) {
+    if (usuariosRegistrados[i].usuario === nuevoUsuario) {
+      mensajeRegistro.textContent = "El nombre de usuario ya está registrado.";
+      return;
+    }
+  }
+
+  let usuarioNuevo = {
+    usuario: nuevoUsuario,
+    contrasena: nuevaContrasena,
+    documento: documento,
+    fechaNacimiento: fechaNacimiento,
+    telefono: telefono,
+    genero: genero,
+    direccion: direccion
+  };
+
+  
+  usuariosRegistrados.push(usuarioNuevo);
+
+  
+  mensajeRegistro.style.color = "#027a48"; 
+  mensajeRegistro.textContent = "¡Usuario registrado con éxito! Ya puedes iniciar sesión.";
+  
+  document.getElementById("formularioRegistro").reset();
+
+
+})

@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
-  <!-- Pantalla de acceso -->
+  
   <section id="pantallaLogin" class="pantalla-login">
     <div class="tarjeta-login">
       <img src="img/logo-esd.png" alt="Logo ESD" class="logo">
@@ -29,7 +29,6 @@
     </div>
   </section>
 
-  <!-- Aplicación que se muestra después del login -->
   <div id="aplicacion" class="oculto">
     <header class="encabezado">
       <a class="marca" href="#" data-pagina="inicio">
@@ -41,6 +40,7 @@
         <button class="boton-menu activo" data-pagina="inicio">Inicio</button>
         <button class="boton-menu" data-pagina="notas">Notas</button>
         <button class="boton-menu" data-pagina="contacto">Contáctanos</button>
+        <button class="boton-menu" data-pagina="registro">Registro</button>
       </nav>
 
       <div class="usuario-actual">
@@ -50,7 +50,7 @@
     </header>
 
     <main>
-      <!-- Inicio -->
+     
       <section id="paginaInicio" class="pagina">
         <div class="bienvenida">
           <p>ESPACIO DE ESTUDIO DIGITAL</p>
@@ -99,7 +99,7 @@
         </article>
       </section>
 
-      <!-- Gestión de notas: formulario y tabla para las operaciones CRUD -->
+    
       <section id="paginaNotas" class="pagina oculto">
         <div class="titulo-pagina">
           <div>
@@ -177,7 +177,7 @@
         </article>
       </section>
 
-      <!-- Información de contacto -->
+    
       <section id="paginaContacto" class="pagina oculto">
         <h1>Contáctanos</h1>
         <p>Si tienes preguntas sobre el sistema, puedes comunicarte con soporte.</p>
@@ -187,12 +187,62 @@
           <p>Correo: soporte@esd.com</p>
         </article>
       </section>
+
+   
+      <section id="paginaRegistro" class="pagina oculto">
+        <h1>Registro de usuarios</h1>
+        <p>¿Quieres registrarte?</p>
+        <article class="tarjeta">
+          <h2>Registrar usuario</h2>
+          <form id="formularioRegistro">
+            <div class="campos">
+              <div class="input-grupo">
+                <label for="nuevoUsuario">Nombre de usuario</label>
+                <input id="nuevoUsuario" type="text" placeholder="Ej: juanperez" required>
+              </div>
+              <div class="input-grupo">
+                <label for="nuevaContrasena">Contraseña</label>
+                <input id="nuevaContrasena" type="password" placeholder="********" required>
+              </div>
+              <div class="input-grupo">
+                <label for="documento">Documento</label>
+                <input id="documento" type="number" placeholder="#########" required>
+              </div>
+              <div class="input-grupo">
+                <label for="fechaNacimiento">Fecha de nacimiento</label>
+                <input id="fechaNacimiento" type="date" placeholder="Seleccione su fecha de nacimiento" required>
+              </div>
+              <div class="input-grupo">
+                <label for="telefono">Teléfono</label>
+                <input id="telefono" type="tel" placeholder="### ### ####" required>
+              </div>
+              <div class="input-grupo">
+                <label for="genero">Género</label>
+                <input id="genero" type="text" placeholder="Ingrese su género">
+              </div>
+              <div class="input-grupo">
+                <label for="direccion">Dirección</label>
+                <input id="direccion" type="text" placeholder="Ingrese su dirección">
+              </div>
+            </div>
+
+            <p id="mensajeRegistro" class="mensaje"></p>
+            <button type="submit" id="btnRegistrar" class="boton boton-azul">Registrar usuario</button>
+          </form>
+        </article>
+      </section>
     </main>
 
-    <footer>ESD - Proyecto académico de FrontEnd</footer>
+    <footer>© 2026 ESD - Espacio de Estudio Digital. Todos los derechos reservados.</footer>
   </div>
 
+<a href="https://wa.me/573001234567?text=Hola,%20tengo%20una%20duda%20sobre%20el%20sistema%20ESD." 
+   class="whatsapp-flotante" 
+   target="_blank" 
+   rel="noopener noreferrer" 
+   title="Contáctanos por WhatsApp">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp ESD">
+</a>
   <script src="js/Dom.js"></script>
 </body>
 </html>
-
