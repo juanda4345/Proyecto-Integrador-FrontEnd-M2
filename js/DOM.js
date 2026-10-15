@@ -1,3 +1,31 @@
+let notasIniciales = [
+  { id: 1, estudiante: "Santiago Gómez", materia: "Frontend", nota1: 4.3, nota2: 4.5, nota3: 4.4 },
+  { id: 2, estudiante: "Valentina Rodríguez", materia: "Backend", nota1: 4.6, nota2: 4.4, nota3: 4.8 },
+  { id: 3, estudiante: "Mateo Fernández", materia: "Lógica de programación", nota1: 2.8, nota2: 3.0, nota3: 2.9 },
+  { id: 4, estudiante: "Sofía Martínez", materia: "Metodologías ágiles", nota1: 3.9, nota2: 4.1, nota3: 4.0 },
+  { id: 5, estudiante: "Lucas Pérez", materia: "Base de datos", nota1: 2.5, nota2: 2.7, nota3: 2.8 },
+  { id: 6, estudiante: "Isabella Silva", materia: "Base de datos", nota1: 4.4, nota2: 4.6, nota3: 4.5 },
+  { id: 7, estudiante: "Thiago Díaz", materia: "Frontend", nota1: 3.6, nota2: 3.8, nota3: 3.5 },
+  { id: 8, estudiante: "Camila Castro", materia: "Backend", nota1: 4.8, nota2: 4.9, nota3: 4.6 }
+];
+
+let notas = notasIniciales;
+let intentos = 0;
+
+function calcularPromedio(nota) {
+  let suma = nota.nota1 + nota.nota2 + nota.nota3;
+  return suma / 3;
+}
+
+function estaAprobado(nota) {
+  if (calcularPromedio(nota) >= 3.0) {
+    return true;
+  }
+
+  return false;
+}
+
+
 var notasIniciales = [
   { id: 1, estudiante: "Santiago Gómez", materia: "Frontend", nota1: 4.3, nota2: 4.5, nota3: 4.4 },
   { id: 2, estudiante: "Valentina Rodríguez", materia: "Backend", nota1: 4.6, nota2: 4.4, nota3: 4.8 },
@@ -25,18 +53,22 @@ function estaAprobado(nota) {
   return false;
 }
 
+/* PARTE 2: MOSTRAR DATOS EN LA PÁGINA */
+
+// Crea una celda y la agrega a una fila de la tabla.
 function crearCelda(fila, texto) {
-  var celda = document.createElement("td");
+  let celda = document.createElement("td");
   celda.textContent = texto;
   fila.appendChild(celda);
 }
 
+// Actualiza las tarjetas de resumen del inicio.
 function actualizarResumen() {
-  var cantidadAprobados = 0;
-  var sumaPromedios = 0;
+  let cantidadAprobados = 0;
+  let sumaPromedios = 0;
 
-  for (var i = 0; i < notas.length; i++) {
-    var promedio = calcularPromedio(notas[i]);
+  for (let i = 0; i < notas.length; i++) {
+    let promedio = calcularPromedio(notas[i]);
     sumaPromedios = sumaPromedios + promedio;
 
     if (estaAprobado(notas[i])) {
@@ -44,7 +76,7 @@ function actualizarResumen() {
     }
   }
 
-  var promedioGeneral = 0;
+  let promedioGeneral = 0;
 
   if (notas.length > 0) {
     promedioGeneral = sumaPromedios / notas.length;
@@ -56,23 +88,24 @@ function actualizarResumen() {
   document.getElementById("totalAprobados").textContent = cantidadAprobados;
 }
 
+// Llena la tabla de notas. También filtra por nombre o materia.
 function mostrarNotas() {
-  var cuerpoTabla = document.getElementById("tablaNotas");
-  var textoBusqueda = document.getElementById("busqueda").value.toLowerCase();
-  var cantidadResultados = 0;
+  let cuerpoTabla = document.getElementById("tablaNotas");
+  let textoBusqueda = document.getElementById("busqueda").value.toLowerCase();
+  let cantidadResultados = 0;
 
   cuerpoTabla.innerHTML = "";
 
-  for (var i = 0; i < notas.length; i++) {
-    var nombre = notas[i].estudiante.toLowerCase();
-    var materia = notas[i].materia.toLowerCase();
-    var coincide = nombre.indexOf(textoBusqueda) >= 0 ||
+  for (let i = 0; i < notas.length; i++) {
+    let nombre = notas[i].estudiante.toLowerCase();
+    let materia = notas[i].materia.toLowerCase();
+    let coincide = nombre.indexOf(textoBusqueda) >= 0 ||
       materia.indexOf(textoBusqueda) >= 0;
 
     if (coincide) {
       cantidadResultados = cantidadResultados + 1;
 
-      var fila = document.createElement("tr");
+      let fila = document.createElement("tr");
       crearCelda(fila, cantidadResultados);
       crearCelda(fila, notas[i].estudiante);
       crearCelda(fila, notas[i].materia);
@@ -81,7 +114,7 @@ function mostrarNotas() {
       crearCelda(fila, notas[i].nota3.toFixed(1));
       crearCelda(fila, calcularPromedio(notas[i]).toFixed(1));
 
-      var estado = "Reprobado";
+      let estado = "Reprobado";
 
       if (estaAprobado(notas[i])) {
         estado = "Aprobado";
@@ -89,16 +122,16 @@ function mostrarNotas() {
 
       crearCelda(fila, estado);
 
-      var celdaAcciones = document.createElement("td");
+      let celdaAcciones = document.createElement("td");
 
-      var botonEditar = document.createElement("button");
+      let botonEditar = document.createElement("button");
       botonEditar.type = "button";
       botonEditar.textContent = "Editar";
       botonEditar.className = "boton-editar";
       botonEditar.setAttribute("data-id", notas[i].id);
       botonEditar.addEventListener("click", editarNota);
 
-      var botonEliminar = document.createElement("button");
+      let botonEliminar = document.createElement("button");
       botonEliminar.type = "button";
       botonEliminar.textContent = "Eliminar";
       botonEliminar.className = "boton-eliminar";
@@ -122,17 +155,18 @@ function mostrarNotas() {
   }
 }
 
+// Muestra cuatro registros en la página de inicio.
 function mostrarNotasRecientes() {
-  var cuerpoTabla = document.getElementById("tablaRecientes");
+  let cuerpoTabla = document.getElementById("tablaRecientes");
   cuerpoTabla.innerHTML = "";
 
-  for (var i = 0; i < notas.length && i < 4; i++) {
-    var fila = document.createElement("tr");
+  for (let i = 0; i < notas.length && i < 4; i++) {
+    let fila = document.createElement("tr");
     crearCelda(fila, notas[i].estudiante);
     crearCelda(fila, notas[i].materia);
     crearCelda(fila, calcularPromedio(notas[i]).toFixed(1));
 
-    var estado = "Reprobado";
+    let estado = "Reprobado";
 
     if (estaAprobado(notas[i])) {
       estado = "Aprobado";
@@ -143,11 +177,13 @@ function mostrarNotasRecientes() {
   }
 }
 
+// Actualiza todas las partes que muestran notas.
 function actualizarPagina() {
   mostrarNotas();
   mostrarNotasRecientes();
   actualizarResumen();
 }
+
 
 function limpiarFormulario() {
   document.getElementById("formularioNota").reset();
@@ -345,7 +381,7 @@ document.getElementById("formularioRegistro").addEventListener("submit", functio
   usuariosRegistrados.push(usuarioNuevo);
 
   
-  mensajeRegistro.style.color = "#027a48"; 
+  mensajeRegistro.style.color = "green"; 
   mensajeRegistro.textContent = "¡Usuario registrado con éxito! Ya puedes iniciar sesión.";
   
   document.getElementById("formularioRegistro").reset();
